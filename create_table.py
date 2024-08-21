@@ -1,6 +1,6 @@
 import psycopg2
 
-def main():
+def main(vector_dimension):
     connection = psycopg2.connect(
         host="localhost",
         database="mydatabase",
@@ -11,14 +11,14 @@ def main():
 
     cursor = connection.cursor()
 
-    create_table_query = """
+    create_table_query = f"""
     CREATE TABLE IF NOT EXISTS chunks (
         chunk_id INTEGER PRIMARY KEY,
         text TEXT NOT NULL,
         page_range INT[2] NOT NULL,
         line_range INT[2] NOT NULL,
         filename TEXT NOT NULL,
-        embedding VECTOR NOT NULL,
+        embedding VECTOR({vector_dimension})
     );
     """
     cursor.execute(create_table_query)
@@ -27,4 +27,4 @@ def main():
     connection.close()
 
 if __name__ == "__main__":
-    main()
+    main(3)

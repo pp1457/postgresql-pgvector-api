@@ -42,7 +42,7 @@ def main():
             'embedding': [0.1 * i + 1, 0.2 * i, 0.3 * i - 1]
         }
 
-        insert_data(chunk)
+        insert_chunk(chunk)
 
 if __name__ == "__main__":
     main()
