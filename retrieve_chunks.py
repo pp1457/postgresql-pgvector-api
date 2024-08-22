@@ -1,4 +1,8 @@
 import psycopg2
+import os
+
+from dotenv import load_dotenv
+load_dotenv()
 
 def retrieve_chunks(search_vector, k_value, threshold, table):
 
