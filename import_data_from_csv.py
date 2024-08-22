@@ -3,13 +3,14 @@ import ast
 import json
 
 def read_csv_to_dict_list(file_path):
-    with open(file_path, mode='r', encoding='utf-8') as file:
+    with open(file_path, mode='r', encoding='utf-8-sig') as file:
         csv_reader = csv.DictReader(file)
         dict_list = [row for row in csv_reader]
     return dict_list
 
 def main():
     file_path = input("File Path: ")
+    table = input("Table Name: ")
     chunks = read_csv_to_dict_list(file_path)
 
     for chunk in data:
@@ -17,7 +18,7 @@ def main():
         chunk["line_range"] = ast.literal_eval(chunk["line_range"])
         chunk["page_range"] = ast.literal_eval(chunk["page_range"])
         chunk["embedding"] = json.loads(chunk["embedding"])
-        insert_chunk("10.1.160.76", chunk)
+        insert_chunk(chunk, table)
 
 if __name__ == "__main__":
     main()
