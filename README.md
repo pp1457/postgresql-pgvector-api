@@ -17,5 +17,5 @@ DB_PORT="5432"
 # Function Reference
 ### `create_table(vector_dimension, table)`
 ### `insert_chunk(chunk, table)`
-### `retrieve_chunks(search_vector, k_value,  table)`
+### `retrieve_chunks(search_vector, k_value, table)`
 ### `import_data_from_csv`
