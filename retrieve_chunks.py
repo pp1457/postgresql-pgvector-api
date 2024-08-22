@@ -21,7 +21,7 @@ def retrieve_chunks(search_vector, k_value, threshold, table):
     select_query = f"""
     SELECT chunk_id, text, page_range, line_range, filename, embedding
     FROM {table}
-    WHERE embedding <=> '{vector_str}' > {threshold}
+    WHERE 1 - (embedding <=> '{vector_str}') > {threshold}
     ORDER BY embedding <=> '{vector_str}'
     LIMIT {k_value};
     """
