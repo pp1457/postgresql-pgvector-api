@@ -1,18 +1,23 @@
 import psycopg2
+import os
+from dotenv import load_dotenv
 
-def insert_chunk(chunk):
+load_dotenv()
+
+def insert_chunk(chunk, table):
+
     connection = psycopg2.connect(
-        host="localhost",
-        database="mydatabase",
-        user="postgres",
-        password="secret",
-        port="5432"
+        host=os.getenv("DB_HOST"),
+        database=os.getenv("DB_DB"),
+        user=os.getenv("DB_USER"),
+        password=os.getenv("DB_PASSWORD"),
+        port=os.getenv("DB_PORT")
     )
 
     cursor = connection.cursor()
 
-    insert_query = """
-    INSERT INTO chunks (chunk_id, text, page_range, line_range, filename, embedding)
+    insert_query = f"""
+    INSERT INTO {table} (chunk_id, text, page_range, line_range, filename, embedding)
     VALUES (%s, %s, %s, %s, %s, %s);
     """
 
@@ -34,7 +39,7 @@ def insert_chunk(chunk):
 def main():
     for i in range(1, 6):
         chunk = {
-            'chunk_id': i,
+            'chunk_id': i+10,
             'text': "Hi, I'm Paul",
             'page_range': (1, 2),
             'line_range': (1, 2),
@@ -42,7 +47,7 @@ def main():
             'embedding': [0.1 * i + 1, 0.2 * i, 0.3 * i - 1]
         }
 
-        insert_chunk(chunk)
+        insert_chunk(chunk, "chunks")
 
 if __name__ == "__main__":
     main()
