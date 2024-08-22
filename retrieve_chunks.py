@@ -1,6 +1,6 @@
 import psycopg2
 
-def retrieve_chunks(search_vector, k_value, table):
+def retrieve_chunks(search_vector, k_value, threshold, table):
 
     connection = psycopg2.connect(
         host=os.getenv("DB_HOST"),
@@ -17,6 +17,7 @@ def retrieve_chunks(search_vector, k_value, table):
     select_query = f"""
     SELECT chunk_id, text, page_range, line_range, filename, embedding
     FROM {table}
+    WHERE embedding <=> '{vector_str}' > {threshold};
     ORDER BY embedding <=> '{vector_str}'
     LIMIT {k_value};
     """
@@ -32,7 +33,7 @@ def retrieve_chunks(search_vector, k_value, table):
 
 
 def main():
-    print(retrieve_chunks([1, 2, 3], 5, "chunks"))
+    print(retrieve_chunks([1, 2, 3], 5, 0.5, "chunks"))
 
 if __name__ == "__main__":
     main()
