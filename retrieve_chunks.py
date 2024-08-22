@@ -24,14 +24,15 @@ def retrieve_chunks(search_vector, k_value, table):
     cursor.execute(select_query)
 
     rows = cursor.fetchall()
-    for row in rows:
-        print(row)
 
     cursor.close()
     connection.close()
 
+    return rows
+
+
 def main():
-    retrieve_chunks([1, 2, 3], 5, "chunks")
+    print(retrieve_chunks([1, 2, 3], 5, "chunks"))
 
 if __name__ == "__main__":
     main()
