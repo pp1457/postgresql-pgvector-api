@@ -21,7 +21,7 @@ def retrieve_chunks(search_vector, k_value, threshold, table):
     select_query = f"""
     SELECT chunk_id, text, page_range, line_range, filename, embedding
     FROM {table}
-    WHERE embedding <=> '{vector_str}' > {threshold};
+    WHERE embedding <=> '{vector_str}' > {threshold}
     ORDER BY embedding <=> '{vector_str}'
     LIMIT {k_value};
     """
@@ -30,10 +30,14 @@ def retrieve_chunks(search_vector, k_value, threshold, table):
 
     rows = cursor.fetchall()
 
+    columns = [desc[0] for desc in cursor.description]
+
+    result = [dict(zip(columns, row)) for row in rows]
+
     cursor.close()
     connection.close()
 
-    return rows
+    return result
 
 
 def main():
