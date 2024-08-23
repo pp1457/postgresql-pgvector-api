@@ -17,16 +17,18 @@ def insert_chunk(chunk, table):
     cursor = connection.cursor()
 
     insert_query = f"""
-    INSERT INTO {table} (chunk_id, text, page_range, line_range, filename, embedding)
-    VALUES (%s, %s, %s, %s, %s, %s);
+    INSERT INTO {table} (filename, chunking_method, embedding_model, chunk_id, page_range, line_range, text, embedding)
+    VALUES (%s, %s, %s, %s, %s, %s, %s, %s);
     """
 
     data_to_insert = (
+        chunk['filename'],
+        chunk['chunking_method'],
+        chunk['embedding_model'],
         chunk['chunk_id'],
-        chunk['text'],
         f"{{{','.join(map(str, chunk['page_range']))}}}",
         f"{{{','.join(map(str, chunk['line_range']))}}}",
-        chunk['filename'],
+        chunk['text'],
         chunk['embedding']
     )
 

@@ -18,11 +18,14 @@ def main(vector_dimension, table):
 
     create_table_query = f"""
     CREATE TABLE IF NOT EXISTS {table} (
-        chunk_id INTEGER PRIMARY KEY,
-        text TEXT NOT NULL,
+        chunk_pkey SERIAL PRIMARY KEY,
+        filename TEXT NOT NULL,
+        chunking_method TEXT NOT NULL,
+        embedding_model TEXT NOT NULL,
+        chunk_id INTEGER NOT NULL,
         page_range INT[2] NOT NULL,
         line_range INT[2] NOT NULL,
-        filename TEXT NOT NULL,
+        text TEXT NOT NULL,
         embedding VECTOR({vector_dimension})
     );
     """
@@ -32,4 +35,4 @@ def main(vector_dimension, table):
     connection.close()
 
 if __name__ == "__main__":
-    main(3, "chunks")
+    main(1536, "chunks")
