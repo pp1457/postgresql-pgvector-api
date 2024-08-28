@@ -48,11 +48,11 @@ def retrieve(pdf_filename, chunking_method, embedding_model, query, k_value, thr
 
 def main():
     print(retrieve(
-        "data/game.pdf",
-        "semantic|model=text-embedding-ada-002|buffer_size=3|chunk_number=30",
-        "text-embedding-3-small",
-        "電腦四有什麼特別的",
-        1,
+        "data/fubon.pdf",
+        "by_markdown|number_of_hash=4",
+        "text-embedding-ada-002",
+        "富邦銀行有哪些種類的存款",
+        5,
         0
     ))
 
