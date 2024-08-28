@@ -16,8 +16,8 @@ def save_embeddings(embeddings, file_path):
     with open(file_path, 'w') as file:
         json.dump(embeddings, file)
 
-def is_embedded(sentence, embeddings):
-    return sentence in embeddings
+def is_embedded(index, embeddings):
+    return index in embeddings
 
 def compute_embedding(doc, model_name):
     load_dotenv()
@@ -51,13 +51,13 @@ def get_embedding(doc, model_name):
     else:
         embedding_result = compute_embedding(doc, model_name)
         embeddings[index] = embedding_result
-
         save_embeddings(embeddings, file_path)
 
-        print("Embedding saved.")
+        return embedding_result
+
 
 def main():
-    get_embedding("Hi, I'm Paul", "text-embedding-3-small")
+    print(get_embedding("Hi, I'm Paul", "text-embedding-3-small"))
 
 if __name__ == "__main__":
     main()
